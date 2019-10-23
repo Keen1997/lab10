@@ -7,28 +7,35 @@ export default class App extends React.Component {
     productInput: '',
     price: ''
   }
-  
+
   findPrice = () => {
-    this.setState({ price: API(productInput) })
+    API(this.state.productInput.toLocaleLowerCase()).then((data) => {
+      if(data.price != 0) this.setState({ price: data.price })
+      else this.setState({ price: 'Product not found' })
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View>
-  
+
           <Text style={styles.price}>{this.state.price}</Text>
-  
+
           <TextInput
             style={styles.textbox}
+            autoCapitalize="none"
             value={this.state.productInput}
-            onChangeText={(text) => {this.setState({ productInput: text })}}
+            onChangeText={(text) => { this.setState({ productInput: text }) }}
           />
-  
-          <TouchableHighlight style={styles.button}>
+
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => this.findPrice()}
+          >
             <Text style={styles.buttonText}>Find Price</Text>
           </TouchableHighlight>
-  
+
         </View>
       </View>
     )

@@ -5,29 +5,23 @@ admin.initializeApp();
 
 exports.findProduct = functions.https.onRequest((req, res) => {
     return admin.database().ref('products').once('value', (snapshot) => {
-        var products = snapshot.val()
+        let products = snapshot.val()
 
         let productName = req.query.name
 
-        checkProduct2(products, productName, res)
+        test(productName, products, res)
     })
 })
 
-let checkProduct = function(nameQueryString, product) {
-    if(nameQueryString == product.name) {
-        return product.price;
-    }
+
+let test = async function(productName, products, res) {
+    let price = 0
+    await products.forEach(product => {
+        if(product.name == productName) {
+            price = product.price;
+        }
+    })
+
+    await res.json({'price': price.toString()})
 }
 
-let checkProduct2 = function(products, productName, res) {
-    let price
-    products.forEach(product => {
-        if(checkProduct(productName, product)) {
-            price = checkProduct(productName, product)
-            console.log(price);
-            res.send(price.toString)
-        } 
-    }, () => {
-        res.send('product not found')
-    })
-}
