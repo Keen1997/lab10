@@ -15,7 +15,7 @@ exports.findProduct = functions.https.onRequest((req, res) => {
 
 
 let test = async function(productName, products, res) {
-    let price = 0
+    let price = 'not found item'
     await products.forEach(product => {
         if(product.name == productName) {
             price = product.price;

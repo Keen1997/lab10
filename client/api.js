@@ -5,13 +5,3 @@ export default (name) => {
         return res.json()
     })
 }
-
-// export default function(name) {
-// 	return fetch(URL+'?name='+name).then(function(response) {
-// 		return response.text();
-// 	}).then(function(text) {
-//         let json = JSON.parse(text);
-//         console.log(json);
-// 		return json;
-// 	});
-// }

@@ -10,8 +10,7 @@ export default class App extends React.Component {
 
   findPrice = () => {
     API(this.state.productInput.toLocaleLowerCase()).then((data) => {
-      if(data.price != 0) this.setState({ price: data.price })
-      else this.setState({ price: 'Product not found' })
+      this.setState({ price: data.price })
     })
   }
 
